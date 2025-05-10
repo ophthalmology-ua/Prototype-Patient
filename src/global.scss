@@ -1,0 +1,768 @@
+@use 'sass:color';
+
+// Color palette
+$primary: #2563eb;
+$bg: #f8fafc;
+$card-bg: #fff;
+$shadow: 0 4px 24px rgba(0,0,0,0.08);
+
+:root {
+  --bg: #f8fafc;
+}
+
+html, body {
+  height: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #222;
+}
+
+html.high-contrast, body.high-contrast {
+  background: #000 !important;
+  color: #222 !important;
+}
+
+.main-layout {
+  min-height: 100vh;
+  height: 100vh;
+  background: var(--bg);
+  &.high-contrast {
+    --bg: #000;
+    background: var(--bg) !important;
+    color: #fff !important;
+    .card, .pending-list__item {
+      background: #111 !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+    }
+    .navbar {
+      background: #111 !important;
+      border-radius: 0 !important;
+      border: none !important;
+    }
+    .nav-btn {
+      color: $primary !important;
+      .nav-btn__icon, .nav-btn__label {
+        color: $primary !important;
+      }
+    }
+    .nav-btn--active {
+      background: $primary !important;
+      color: #fff !important;
+      border-radius: 50px !important;
+      .nav-btn__icon, .nav-btn__label {
+        color: #fff !important;
+      }
+    }
+    .contrast-toggle {
+      background: $primary !important;
+      color: #000 !important;
+      border-color: #fff;
+    }
+    a, button, .pending-list__chevron {
+      color: $primary !important;
+    }
+  }
+}
+
+.main-layout.high-contrast,
+.main-layout.high-contrast html,
+.main-layout.high-contrast body {
+  --bg: #000;
+  background: #000 !important;
+  color: #fff !important;
+}
+
+.main-content {
+  padding-bottom: 90px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.navbar {
+  width: 100vw;
+  left: 0;
+  right: 0;
+  border-radius: 0;
+  background: $primary;
+  border: none;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  position: fixed;
+  bottom: 0;
+  max-width: 100vw;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+  height: 64px;
+  @media (min-width: 600px) {
+    width: 95vw;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: $primary;
+    border: 2px solid #fff;
+    max-width: 480px;
+    bottom: 20px;
+    height: 64px;
+    box-shadow: 0 6px 32px rgba(0,0,0,0.08);
+  }
+}
+
+.main-layout.high-contrast .navbar {
+  background: #111 !important;
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+@media (min-width: 600px) {
+  .main-layout.high-contrast .navbar {
+    border-radius: 999px !important;
+    border: 3px solid #fff !important;
+    bottom: 20px;
+  }
+}
+
+.nav-btn {
+  flex: 1 1 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 2px 0;
+  height: 64px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 0.18s;
+  cursor: pointer;
+  position: relative;
+  .nav-btn__icon {
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+    transition: color 0.18s;
+  }
+  .nav-btn__label {
+    font-size: 12px;
+    margin-top: 2px;
+    transition: color 0.18s;
+  }
+}
+
+.main-layout.high-contrast .nav-btn {
+  color: $primary !important;
+  background: transparent !important;
+  .nav-btn__icon, .nav-btn__label {
+    color: $primary !important;
+  }
+}
+
+.main-layout.high-contrast .nav-btn--active {
+  background: $primary !important;
+  color: #fff !important;
+  border-radius: 50px !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+  min-width: 56px;
+  .nav-btn__icon, .nav-btn__label {
+    color: #fff !important;
+  }
+}
+
+.main-layout.high-contrast .nav-btn--active::after {
+  display: none !important;
+}
+
+.contrast-toggle {
+  position: fixed;
+  bottom: 90px;
+  right: 32px;
+  background: $primary;
+  color: #fff;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  padding: 16px;
+  box-shadow: $shadow;
+  z-index: 30;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover, &:focus { background: color.adjust($primary, $lightness: -10%); }
+  &__icon { font-size: 1.5rem; }
+}
+
+.home {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: $primary;
+  }
+}
+
+.card {
+  background: $card-bg;
+  border-radius: 1.2rem;
+  box-shadow: $shadow;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: $primary;
+  }
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1rem;
+    color: #333;
+  }
+  &__icon {
+    font-size: 1.2rem;
+    &--calendar { color: $primary; }
+    &--clock { color: $primary; }
+    &--map { color: $primary; }
+  }
+}
+
+.pending-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f5f9;
+    color: #333;
+    border-radius: 0.8rem;
+    padding: 0.9rem 1.1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.18s;
+    &:hover, &:focus { background: $primary; color: #fff; }
+  }
+  &__action {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    color: $primary;
+    font-size: 0.95em;
+    font-weight: 600;
+  }
+  &__chevron {
+    font-size: 1.1em;
+    color: #bbb;
+    margin-left: 2px;
+  }
+}
+
+// Appointments page
+.appointments {
+  margin-top: 2rem;
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: $primary;
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  &__agendar-btn {
+    display: block;
+    margin: 0 auto;
+    background: $primary;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 1.2rem;
+    padding: 0.9rem 2.2rem;
+    box-shadow: $shadow;
+    cursor: pointer;
+    transition: background 0.18s;
+    &:hover, &:focus { background: $primary; }
+  }
+}
+
+.appointment-card {
+  background: $card-bg;
+  border-radius: 1.2rem;
+  box-shadow: $shadow;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1rem;
+    color: #333;
+  }
+  &__icon {
+    font-size: 1.2rem;
+    color: $primary;
+  }
+}
+
+// Popup overlay and modal
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup {
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: $shadow;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 320px;
+  max-width: 95vw;
+  position: relative;
+  animation: popup-in 0.2s cubic-bezier(.4,0,.2,1);
+  &__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.5rem;
+    cursor: pointer;
+    &:hover { color: $primary; }
+  }
+  &__content {
+    margin-top: 0.5rem;
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $primary;
+      margin-bottom: 1.2rem;
+    }
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+    &--row {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      justify-content: flex-start;
+    }
+  }
+  &__pill {
+    background: #f1f5f9;
+    color: #333;
+    border-radius: 1.2rem;
+    padding: 0.7rem 1.3rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+    &:hover, &:focus { background: $primary; color: #fff; }
+    &--active {
+      background: $primary;
+      color: #fff;
+    }
+  }
+  &__back {
+    background: none;
+    border: none;
+    color: $primary;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.7rem;
+    margin-right: 1.2rem;
+    cursor: pointer;
+    &:hover { text-decoration: underline; }
+  }
+  &__confirm {
+    background: $primary;
+    color: #fff;
+    border: none;
+    border-radius: 1.2rem;
+    padding: 0.7rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.7rem;
+    cursor: pointer;
+    transition: background 0.18s;
+    &:hover:enabled, &:focus:enabled { background: $primary; }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+  }
+}
+
+@keyframes popup-in {
+  from { transform: scale(0.95) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.card__title, .appointments__title, .home__title {
+  color: $primary !important;
+}
+
+.card__icon, .appointment-card__icon {
+  color: $primary !important;
+}
+
+.pending-list__action, .appointments__agendar-btn, .popup__pill--active, .popup__confirm {
+  color: $primary !important;
+  background:transparent !important;
+  border-color: $primary !important;
+}
+
+.estudios {
+  margin-top: 2rem;
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: $primary;
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.estudio-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: $shadow;
+  padding: 1.2rem 1.5rem;
+  gap: 1.2rem;
+  &__icon {
+    font-size: 2rem;
+    color: $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    svg {
+      width: 2.2rem;
+      height: 2.2rem;
+    }
+  }
+  &__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  &__nombre {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+  }
+  &__fecha {
+    font-size: 0.98rem;
+    color: #888;
+  }
+  &__especialidad {
+    font-size: 0.98rem;
+    color: $primary;
+    font-weight: 500;
+    margin-bottom: 0.1rem;
+  }
+  &__agudeza {
+    font-size: 0.95rem;
+    color: #222;
+    margin-top: 0.1rem;
+  }
+}
+
+// Diferenciar íconos
+.estudio-card__icon svg {
+  stroke-width: 2.2;
+}
+.estudio-card__icon svg {
+  &.filetext {
+    color: $primary;
+  }
+  &.calendar {
+    color: darken($primary, 15%);
+  }
+}
+
+.estudio-modal {
+  min-width: 320px;
+  max-width: 95vw;
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $primary;
+    margin-bottom: 1rem;
+  }
+  &__img-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    background: #f8fafc;
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+  &__img {
+    max-width: 320px;
+    max-height: 320px;
+    width: 100%;
+    border-radius: 0.7rem;
+    box-shadow: $shadow;
+    object-fit: contain;
+    background: #fff;
+  }
+  &__fecha {
+    font-size: 1rem;
+    color: #888;
+    margin-top: 0.5rem;
+  }
+  &__nombre {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $primary;
+    margin-bottom: 0.5rem;
+  }
+  &__notas {
+    font-size: 1rem;
+    color: #222;
+    margin-top: 1rem;
+    background: #f8fafc;
+    border-radius: 0.7rem;
+    padding: 1rem;
+  }
+  &__especialidad {
+    font-size: 1rem;
+    color: $primary;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  &__agudeza {
+    font-size: 1rem;
+    color: $primary;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.main-layout.high-contrast {
+  background: #000 !important;
+  color: #fff !important;
+  .card, .pending-list__item {
+    background: #111 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+  }
+  .card__title, .navbar, .nav-btn__label, .appointment-card__icon, .card__icon {
+    color: #fff !important;
+  }
+  .navbar {
+    background: #111 !important;
+    border: 2px solid #fff !important;
+  }
+  .nav-btn {
+    color: #fff !important;
+    .nav-btn__icon, .nav-btn__label {
+      color: #fff !important;
+    }
+  }
+  .nav-btn--active {
+    background: $primary !important;
+    color: #fff !important;
+    border-radius: 50px !important;
+    .nav-btn__icon, .nav-btn__label {
+      color: #fff !important;
+    }
+  }
+  .nav-btn--active::after {
+    display: none !important;
+  }
+  .pending-list__item {
+    border: 2px solid #fff !important;
+    background: #111 !important;
+    color: #fff !important;
+  }
+  .pending-list__action {
+    background: $primary !important;
+    color: #fff !important;
+    border-radius: 8px;
+    padding: 0.2em 0.8em;
+    font-weight: 700;
+    border: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2em;
+  }
+  .pending-list__chevron {
+    color: #fff !important;
+  }
+  .appointments__agendar-btn, .popup__confirm, .popup__pill--active {
+    background: $primary !important;
+    color: #fff !important;
+    border: none !important;
+  }
+  .estudio-card {
+    background: #111 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+  }
+  .estudio-card__icon, .estudio-card__nombre, .estudio-card__especialidad, .estudio-card__fecha, .estudio-card__agudeza {
+    color: #fff !important;
+  }
+  .estudio-modal {
+    background: #111 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+  }
+  .estudio-modal__img-wrap {
+    background: #000 !important;
+  }
+  .estudio-modal__desc, .estudio-modal__notas {
+    color: #fff !important;
+    background: #222 !important;
+  }
+}
+
+.main-layout.high-contrast .card__row span {
+  color: #fff !important;
+}
+
+.appointments__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.turno-card {
+  background: $card-bg;
+  border: 2px solid transparent;
+  border-radius: 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  padding: 1.3rem 1.5rem;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.turno-card__fecha, .turno-card__hora {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.1rem;
+  color: $primary;
+  font-weight: 600;
+}
+.turno-card__doctor {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1rem;
+  color: #222;
+  font-weight: 400;
+}
+.turno-card__icon {
+  font-size: 1.2rem;
+  color: $primary;
+}
+
+.main-layout.high-contrast .turno-card {
+  background: #111 !important;
+  border: 2px solid #fff !important;
+  color: #fff !important;
+}
+.main-layout.high-contrast .turno-card__fecha,
+.main-layout.high-contrast .turno-card__hora {
+  color: $primary !important;
+}
+.main-layout.high-contrast .turno-card__doctor {
+  color: #fff !important;
+}
+.main-layout.high-contrast .turno-card__icon {
+  color: $primary !important;
+}
+
+.appointments__agendar-btn {
+  display: block;
+  margin: 2.5rem auto 0 auto;
+  background: $primary;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 1.5rem;
+  padding: 1rem 2.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  cursor: pointer;
+  transition: background 0.18s;
+  &:hover, &:focus { background: color.adjust($primary, $lightness: -10%); }
+}
+
+.main-layout.high-contrast .popup {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+.main-layout.high-contrast .popup__close {
+  color: #fff !important;
+}
+.main-layout.high-contrast .popup__content h2 {
+  color: #fff !important;
+}
+.main-layout.high-contrast .popup__pill {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+.main-layout.high-contrast .popup__pill--active {
+  background: $primary !important;
+  color: #fff !important;
+  border: 2px solid $primary !important;
+}
+.main-layout.high-contrast .popup__back {
+  color: $primary !important;
+}
+.main-layout.high-contrast .popup__confirm {
+  background: $primary !important;
+  color: #fff !important;
+  border: none !important;
+} 
